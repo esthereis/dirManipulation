@@ -22,16 +22,24 @@ int main(int argc, char *argv[])
 
     while ((dirread = readdir(dir)) != NULL)
     {
-      char *fileName = dirread->d_name;
-      if (strstr(fileName, ".pdf") != NULL)
+
+      if (strstr(dirread->d_name, ".pdf") != NULL)
       {
-        char *adress = strcat(argv[1], fileName);
-        int isRemoved = remove(adress);
-        printf("%s: %i\n", adress, isRemoved);
-        closedir(dir);
+        char address[] = "";
+        strcpy(address, argv[1]);
+        strcat(address, dirread->d_name);
+
+        int isRemoved = remove(address);
+        printf("%s: %i\n", address, isRemoved);
       }
-        }
+    }
   }
+  /*
+    if (dir == NULL)
+    {
+      printf("Directory sucessfully cleaned up!\n");
+    }*/
+  closedir(dir);
 
   return 0;
 }
